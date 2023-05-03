@@ -2,7 +2,7 @@
   "compilerOptions": {
     "target": "ES6",
     "module": "CommonJS",
-    "rootDir": ".",
+    "rootDir": "src",
     "moduleResolution": "node16",
     "allowJs": false,
     "declaration": true,
@@ -29,7 +29,5 @@
     "skipDefaultLibCheck": true,
     "skipLibCheck": true
   },
-  "include": [
-    "main.ts"
-  ]
+  "include": ["src/**/*.ts"]
 }
