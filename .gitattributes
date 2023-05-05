@@ -1,4 +1,3 @@
-*.js    text
+*.cjs    text
 *.ts    text
-*.vue   text
 *.json  text

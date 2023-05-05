@@ -51,7 +51,7 @@ module.exports = {
     // isn't allowed to use async Promises
     'no-async-promise-executor': 'error', // ?
     // allow only console.error or console.warn
-    'no-console': 'error',
+    'no-console': ['error', { allow: ['warn', 'error']}],
     // allow debugger during development
     'no-debugger': 'error',
     // amount of empty lines has been exceeded
@@ -94,6 +94,14 @@ module.exports = {
     'space-before-blocks': 'error',
     // requires or disallows a space before function parenthesis.
     'space-before-function-paren': 'error'
-  }
+  },
+  overrides: [
+    {
+      files: ["tests/**/*.spec.ts"],
+      rules: {
+        "@typescript-eslint/no-empty-function": 'off'
+      }
+    }
+  ]
 }
 
