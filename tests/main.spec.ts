@@ -1,4 +1,4 @@
-import createComponent from '../src/main'
+import { createComponent } from '../src/main'
 import { mount } from '@vue/test-utils'
 
 // Options taken from highcharts demo

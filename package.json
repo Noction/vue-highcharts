@@ -2,36 +2,38 @@
   "name": "vue-highcharts",
   "version": "1.0.0",
   "description": "Vue wrapper for Highcharts",
-  "main": "dist/main.js",
+  "type": "module",
+  "main": "dist/main.cjs",
   "types": "dist/main.d.ts",
   "exports": {
     ".": {
-      "default": "./dist/main.js"
+      "import": "./dist/main.mjs",
+      "require": "./dist/main.cjs",
+      "default": "./dist/main.cjs"
     },
     "./*": "./*"
   },
   "files": [
-    "dist/"
+    "dist"
   ],
   "scripts": {
-    "prebuild": "rm -rf dist",
-    "build": "rollup src/main.ts --",
-    "build:types": "eslint src --ext .ts --fix && tsc --project tsconfig.build.json",
+    "build": "unbuild",
+    "type:check": "eslint src --ext .ts --fix && tsc",
     "test": "eslint tests --ext .spec.ts && tsc && vitest run --globals --environment=jsdom",
     "test:coverage": "pnpm test -- --coverage.enabled --coverage.provider c8 --coverage.src coverage",
     "prepublishOnly": "pnpm build"
   },
   "keywords": [],
-  "type": "module",
   "author": "Noction",
   "license": "MIT",
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^5.59.2",
-    "@typescript-eslint/parser": "^5.59.0",
+    "@typescript-eslint/parser": "^5.59.2",
     "eslint": "^8.39.0",
     "eslint-plugin-sort-exports": "^0.8.0",
     "simple-git-hooks": "^2.8.1",
-    "typescript": "^5.0.4"
+    "typescript": "^5.0.4",
+    "unbuild": "^1.2.1"
   },
   "peerDependencies": {
     "highcharts": ">=10.3.3",
@@ -46,9 +48,12 @@
   },
   "optionalDependencies": {
     "@vitest/coverage-c8": "^0.31.0",
-    "@vue/server-test-utils": "^1.3.0",
     "@vue/test-utils": "^2.3.2",
     "jsdom": "^22.0.0",
     "vitest": "^0.31.0"
+  },
+  "dependencies": {
+    "highcharts": "^10.3.3",
+    "vue": "^3.2.47"
   }
 }

@@ -1,3 +1,4 @@
 *.cjs    text
-*.ts    text
-*.json  text
+*.js     text
+*.ts     text
+*.json   text

@@ -14,7 +14,9 @@ const warn = (message: string) => {
   console.warn(`@noction/vue-highcharts: ${message}`)
 }
 
-function createComponent (name: ChartName): Component {
+export const Highcharts = createComponent('Highcharts')
+
+export function createComponent (name: ChartName): Component {
   const constructor = constructors.get(name) ?? Chart
 
   return defineComponent({
@@ -53,7 +55,3 @@ function createComponent (name: ChartName): Component {
     }
   })
 }
-
-export const Highcharts = createComponent('Highcharts')
-
-export default createComponent
