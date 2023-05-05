@@ -13,14 +13,13 @@
     },
     "./*": "./*"
   },
-  "files": [
-    "dist"
-  ],
+  "files": ["dist"],
   "scripts": {
     "build": "unbuild",
-    "type:check": "eslint src --ext .ts --fix && tsc",
+    "lint": "eslint . --ext .ts",
+    "type:check": "tsc",
     "test": "eslint tests --ext .spec.ts && tsc && vitest run --globals --environment=jsdom",
-    "test:coverage": "pnpm test -- --coverage.enabled --coverage.provider c8 --coverage.src coverage",
+    "test:coverage": "pnpm test -- --coverage.enabled --coverage.provider=c8 --coverage.reporter=cobertura",
     "prepublishOnly": "pnpm build"
   },
   "keywords": [],
