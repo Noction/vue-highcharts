@@ -11,19 +11,19 @@ Wrapper for [`Highcharts`](https://www.highcharts.com/) in Vue. *Currently suppo
 ***npm***
 
 ```bash
-npm i flexsearch @noction/vue-use-flexsearch
+npm i @noction/vue-highcharts
 ```
 
 ***yarn***
 
 ```bash
-yarn add flexsearch @noction/vue-use-flexsearch
+yarn add @noction/vue-highcharts
 ```
 
 ***pnpm***
 
 ```bash
-pnpm add flexsearch @noction/vue-use-flexsearch
+pnpm add @noction/vue-highcharts
 ```
 
 ## Usage
