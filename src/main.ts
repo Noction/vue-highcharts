@@ -2,11 +2,11 @@ import { Chart } from 'highcharts'
 import type { Component } from 'vue'
 import { defineComponent, h, onBeforeUnmount, onMounted, ref, watch } from 'vue'
 
-// Type declaration
+// BEGIN Types declaration
 
 export type ChartName = 'Highcharts'
 
-// Types declaration
+// END Types declaration
 
 const constructors: Map<ChartName, typeof Chart> = new Map([['Highcharts', Chart]])
 
@@ -24,8 +24,7 @@ export function createComponent (name: ChartName): Component {
     props: {
       options: {
         type: Object,
-        required: false,
-        default: () => ({})
+        required: true
       }
     },
     render: () => h('div', { ref: 'highchartsRef' }),
