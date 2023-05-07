@@ -16,6 +16,12 @@ const warn = (message: string) => {
 
 export const Highcharts = createComponent('Highcharts')
 
+/**
+ * Creates a highcharts component
+ * @param name {ChartName} that will be used as exported component name
+ * @returns {Component}
+ */
+
 export function createComponent (name: ChartName): Component {
   const constructor = constructors.get(name) ?? Chart
 
