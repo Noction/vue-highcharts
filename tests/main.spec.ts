@@ -1,4 +1,4 @@
-import { createComponent } from '../src/main'
+import Highcharts from '../src/main'
 import { mount } from '@vue/test-utils'
 
 // Options taken from highcharts demo
@@ -75,21 +75,21 @@ const options = {
 }
 
 describe('src `main`', () => {
-  describe('createComponent', () => {
+  describe('Highcharts', () => {
     it('Should render the chart inside wrapper element', () => {
-      const wrapper = mount(createComponent('Highcharts') as object, { props: { options } })
+      const wrapper = mount(Highcharts, { props: { options } })
 
       expect(wrapper.element.children).not.toHaveLength(0)
     })
     it('Should destroy the chart when unmounted', () => {
-      const wrapper = mount(createComponent('Highcharts') as object, { props: { options } })
+      const wrapper = mount(Highcharts, { props: { options } })
 
       wrapper.unmount()
 
       expect(wrapper.element.children).toHaveLength(0)
     })
     it('Should get a warning because there is no element to mount on', () => {
-      const highcharts = createComponent('Highcharts') as { render: () => void }
+      const highcharts = Highcharts as { render: () => void }
 
       highcharts.render = () => null
 
@@ -97,7 +97,7 @@ describe('src `main`', () => {
 
       mount(highcharts, { props: { options } })
 
-      expect(console.warn).toBeCalled()
+      expect(console.warn).toHaveBeenCalledWith('@noction/vue-highcharts: You don\'t have an HTML element to mount the chart')
     })
   })
 })
