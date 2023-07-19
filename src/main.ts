@@ -2,31 +2,17 @@ import { Chart } from 'highcharts'
 import type { Component } from 'vue'
 import { defineComponent, h, onBeforeUnmount, onMounted, ref, watch } from 'vue'
 
-// BEGIN Types declaration
-
-export type ChartName = 'Highcharts'
-
-// END Types declaration
-
-const constructors: Map<ChartName, typeof Chart> = new Map([['Highcharts', Chart]])
-
 const warn = (message: string) => {
   console.warn(`@noction/vue-highcharts: ${message}`)
 }
 
-export const Highcharts = createComponent('Highcharts')
-
 /**
- * Creates a highcharts component
- * @param name {ChartName} that will be used as exported component name
+ * Creates Highcharts component
  * @returns {Component}
  */
-
-export function createComponent (name: ChartName): Component {
-  const constructor = constructors.get(name) ?? Chart
-
+function createChart (): Component {
   return defineComponent({
-    name,
+    name: 'Highcharts',
     props: {
       options: {
         type: Object,
@@ -36,27 +22,32 @@ export function createComponent (name: ChartName): Component {
     render: () => h('div', { ref: 'highchartsRef' }),
     setup (props) {
       const highchartsRef = ref<HTMLDivElement | null>(null)
-      const chart = ref<Chart | null>(null)
 
-      const redraw = (options: object) => {
-        if (highchartsRef.value) {
-          chart.value = new constructor(highchartsRef.value, options)
-        } else {
-          warn('You don\'t have a html element to mount the chart')
+      onMounted(() => {
+        if (highchartsRef.value === null) {
+          warn('You don\'t have an HTML element to mount the chart')
+
+          return
         }
-      }
 
-      onMounted(() => redraw(props.options))
-      watch(() => props.options, redraw)
+        const chart = ref(new Chart(highchartsRef.value, props.options))
 
-      onBeforeUnmount(() => {
-        if (highchartsRef.value && chart.value) chart.value.destroy()
+        watch(() => props.options, newOptions => {
+          chart.value.update(newOptions, true, true)
+        }, {
+          deep: true
+        })
+
+        onBeforeUnmount(() => {
+          chart.value.destroy()
+        })
       })
 
       return {
-        highchartsRef,
-        chart
+        highchartsRef
       }
     }
   })
 }
+
+export default createChart()

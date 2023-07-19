@@ -36,8 +36,8 @@ pnpm add @noction/vue-highcharts
 </template>
 
 <script setup lang="ts">
-import { Highcharts } from '@noction/vue-highcharts'
-import { reactive } from "vue";
+import Highcharts from '@noction/vue-highcharts'
+import { reactive } from 'vue'
 
 const options = reactive({
   series: [{
@@ -50,10 +50,8 @@ const options = reactive({
 
 ## Typings
 
-```ts
-
-type ChartName = 'Highcharts'
-
+```
+At the moment @noction/vue-highcharts doesn't export any types.
 ```
 
 ### Props
@@ -66,6 +64,6 @@ type ChartName = 'Highcharts'
 ### Supporting
 
 1. [`Highcharts.Chart`]('https://api.highcharts.com/class-reference/Highcharts.Chart')
-2. ⛔ **WIP**[`Highcharts.MapChart`]('https://api.highcharts.com/class-reference/Highcharts.MapChart') ⛔
-3. ⛔ **WIP**[`Highcharts.StockChart`]('https://api.highcharts.com/class-reference/Highcharts.StockChart') ⛔
-4. ⛔ **WIP**[`Highcharts.GanttChart`]('https://api.highcharts.com/class-reference/Highcharts.GanttChart') ⛔
+2. [`Highcharts.MapChart`]('https://api.highcharts.com/class-reference/Highcharts.MapChart')
+3. [`Highcharts.StockChart`]('https://api.highcharts.com/class-reference/Highcharts.StockChart')
+4. [`Highcharts.GanttChart`]('https://api.highcharts.com/class-reference/Highcharts.GanttChart')
