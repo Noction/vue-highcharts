@@ -1,3 +1,4 @@
+import { Chart } from 'highcharts'
 import Highcharts from '../src/main'
 import { mount } from '@vue/test-utils'
 
@@ -76,28 +77,46 @@ const options = {
 
 describe('src `main`', () => {
   describe('Highcharts', () => {
-    it('Should render the chart inside wrapper element', () => {
-      const wrapper = mount(Highcharts, { props: { options } })
+    describe('highchartsRef exists', ()  => {
+      it('Should render the chart inside wrapper element', async () => {
+        const wrapper = mount(Highcharts, { props: { options } })
 
-      expect(wrapper.element.children).not.toHaveLength(0)
+        expect(wrapper.element.children).not.toHaveLength(0)
+      })
+      it('Should destroy the chart when unmounted', () => {
+        const wrapper = mount(Highcharts, { props: { options } })
+
+        wrapper.unmount()
+
+        expect(wrapper.element.children).toHaveLength(0)
+      })
+      it('Should return Chart instance', () => {
+        const wrapper = mount(Highcharts, { props: { options } })
+
+        expect(wrapper.vm.chart).toBeInstanceOf(Chart)
+      })
     })
-    it('Should destroy the chart when unmounted', () => {
-      const wrapper = mount(Highcharts, { props: { options } })
+    describe('highchartsRef doesn\'t exist', () => {
+      it('Should get a warning because there is no element to mount on', () => {
+        const warnSpy = vi.spyOn(global.console, 'warn')
 
-      wrapper.unmount()
+        const highcharts = Highcharts as { render: () => void }
 
-      expect(wrapper.element.children).toHaveLength(0)
-    })
-    it('Should get a warning because there is no element to mount on', () => {
-      const highcharts = Highcharts as { render: () => void }
+        highcharts.render = () => null
 
-      highcharts.render = () => null
+        mount(highcharts, { props: { options } })
 
-      global.console.warn = vi.fn()
+        expect(warnSpy).toHaveBeenCalledWith('@noction/vue-highcharts: You don\'t have an HTML element to mount the chart')
+      })
+      it('Should return chart as null', () => {
+        const highcharts = Highcharts as { render: () => void }
 
-      mount(highcharts, { props: { options } })
+        highcharts.render = () => null
 
-      expect(console.warn).toHaveBeenCalledWith('@noction/vue-highcharts: You don\'t have an HTML element to mount the chart')
+        const wrapper = mount(highcharts, { props: { options } })
+
+        expect(wrapper.vm.chart).toBeNull()
+      })
     })
   })
 })

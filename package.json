@@ -5,6 +5,7 @@
   "type": "module",
   "main": "dist/main.cjs",
   "types": "dist/main.d.ts",
+  "packageManager": "pnpm@8.7.1",
   "exports": {
     ".": {
       "import": "./dist/main.mjs",
@@ -63,8 +64,8 @@
   "simple-git-hooks": {
     "pre-commit": "npx lint-staged"
   },
-  "dependencies": {
-    "highcharts": "^10.3.3",
-    "vue": "^3.3.4"
+  "engines": {
+    "node": "^20",
+    "pnpm": "^8"
   }
 }
