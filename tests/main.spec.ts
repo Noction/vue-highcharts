@@ -77,6 +77,9 @@ const options = {
 
 describe('src `main`', () => {
   describe('Highcharts', () => {
+    beforeAll(() => {
+      console.warn = vi.fn()
+    })
     describe('highchartsRef exists', ()  => {
       it('Should render the chart inside wrapper element', async () => {
         const wrapper = mount(Highcharts, { props: { options } })
@@ -98,7 +101,7 @@ describe('src `main`', () => {
     })
     describe('highchartsRef doesn\'t exist', () => {
       it('Should get a warning because there is no element to mount on', () => {
-        const warnSpy = vi.spyOn(global.console, 'warn')
+        const warnSpy = vi.spyOn(console, 'warn')
 
         const highcharts = Highcharts as { render: () => void }
 
