@@ -22,6 +22,7 @@ function createChart (): Component {
     render: () => h('div', { ref: 'highchartsRef' }),
     setup (props) {
       const highchartsRef = ref<HTMLDivElement | null>(null)
+      const chart = ref<Chart | null>(null)
 
       onMounted(() => {
         if (highchartsRef.value === null) {
@@ -30,21 +31,26 @@ function createChart (): Component {
           return
         }
 
-        const chart = ref(new Chart(highchartsRef.value, props.options))
+        chart.value = new Chart(highchartsRef.value, props.options)
+      })
 
-        watch(() => props.options, newOptions => {
-          chart.value.update(newOptions, true, true)
-        }, {
-          deep: true
-        })
-
-        onBeforeUnmount(() => {
+      onBeforeUnmount(() => {
+        if (chart.value !== null) {
           chart.value.destroy()
-        })
+        }
+      })
+
+      watch(() => props.options, newOptions => {
+        if (chart.value !== null) {
+          chart.value.update(newOptions, true, true)
+        }
+      }, {
+        deep: true
       })
 
       return {
-        highchartsRef
+        highchartsRef,
+        chart
       }
     }
   })
