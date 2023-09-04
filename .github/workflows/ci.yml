@@ -42,14 +42,14 @@ jobs:
       - name: Installing modules
         run: pnpm i
 
-      - name: Building module
-        run: pnpm build
-
       - name: Running eslint
         run: pnpm lint
 
       - name: Running typecheck
         run: pnpm type:check
+
+      - name: Building module
+        run: pnpm build
 
   unit-test:
     runs-on: ubuntu-latest
