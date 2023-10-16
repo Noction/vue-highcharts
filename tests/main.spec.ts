@@ -1,5 +1,5 @@
 import { Chart } from 'highcharts'
-import Highcharts from '../src/main'
+import Highcharts from '../src/main1'
 import { mount } from '@vue/test-utils'
 
 // Options taken from highcharts demo
