@@ -10,14 +10,12 @@ import {
   defineComponent,
   getCurrentInstance,
   h,
-  onMounted,
-  provide,
-  ref,
+  onMounted, ref,
   render,
   App,
   Fragment,
   shallowRef,
-  Ref, onUnmounted, watch, toRaw
+  Ref, onUnmounted, watch,
 } from 'vue';
 import type { Options } from 'highcharts';
 import {provideHighchartsContext} from "@/composables/useHighchartsContext";

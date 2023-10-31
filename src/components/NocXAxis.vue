@@ -4,7 +4,7 @@
 
 <script setup lang="ts">
 import {ref, onMounted, onUnmounted, h, render, defineComponent, Fragment, provide, inject, watchEffect} from 'vue';
-import { Axis, Chart, type XAxisOptions } from 'highcharts';
+import { Axis, type XAxisOptions } from 'highcharts';
 import { useHighchartsContext } from '@/composables/useHighchartsContext';
 
 const props = defineProps<{

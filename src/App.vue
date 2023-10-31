@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import { reactive } from "vue";
 import { NocHighcharts, NocSeries, NocXAxis, NocYAxis, NocPlotLine } from "./components";
+import NocPlotBand from "@/components/NocPlotBand.vue";
+import type Highcharts from 'highcharts'
 
 const chartOptions: Highcharts.Options = {
   accessibility: { enabled: false },
@@ -54,13 +56,6 @@ const plotLineOptionsY = reactive({
   color: 'red',
   width: 2,
 });
-
-// const seriesOptions = reactive({
-//   type: 'bar',
-//   id:'inserted',
-//   data: [1, 3, 2, 4],
-//   visible: true
-// });
 
 const seriesList = reactive([
   {
@@ -122,18 +117,41 @@ function toggleLegend() {
   chartOptions.legend.enabled = !chartOptions.legend.enabled;
 }
 
+// ... [the rest of your imports and initial setup]
+
+const plotBandOptionsY = reactive({
+  from: 1,
+  to: 3,
+  color: 'rgba(68, 170, 213, 0.1)',
+  id: 'my-plot-band'
+});
+
+function togglePlotBand() {
+  if (plotBandOptionsY.from !== null && plotBandOptionsY.to !== null) {
+    plotBandOptionsY.from = null;
+    plotBandOptionsY.to = null;
+  } else {
+    plotBandOptionsY.from = 1;
+    plotBandOptionsY.to = 3;
+  }
+}
+
+function changePlotBandRange(fromValue, toValue) {
+  plotBandOptionsY.from = fromValue;
+  plotBandOptionsY.to = toValue;
+}
+
+function changePlotBandColor(color) {
+  plotBandOptionsY.color = color;
+}
+
+// ... [the rest of your methods and reactive objects]
+
+
 </script>
 
 <template>
   <header>
-    <!--    <img-->
-    <!--      alt="Vue logo"-->
-    <!--      class="logo"-->
-    <!--      src="./assets/logo.svg"-->
-    <!--      width="125"-->
-    <!--      height="125"-->
-    <!--    >-->
-
     <div class="controls">
       <button @click="toggleLegend">
         Toggle Legend
@@ -169,6 +187,18 @@ function toggleLegend() {
       <button @click="removeSeries('inserted')">
         Remove Series 'inserted'
       </button>
+
+      <button @click="togglePlotBand">
+        Toggle Y PlotBand
+      </button>
+
+      <button @click="changePlotBandRange(2, 4)">
+        Set Y PlotBand Range (2-4)
+      </button>
+
+      <button @click="changePlotBandColor('rgba(255, 0, 0, 0.1')">
+        Change Y PlotBand Color to Red
+      </button>
     </div>
   </header>
 
@@ -185,6 +215,7 @@ function toggleLegend() {
         :id="yAxisOptions.id"
         :options="yAxisOptions"
       >
+        <noc-plot-band :options="plotBandOptionsY" />
         <noc-plot-line :options="plotLineOptionsY" />
       </noc-y-axis>
 
@@ -198,136 +229,10 @@ function toggleLegend() {
   </main>
 </template>
 
-<style>
-/* color palette from <https://github.com/vuejs/theme> */
-:root {
-  --vt-c-white: #ffffff;
-  --vt-c-white-soft: #f8f8f8;
-  --vt-c-white-mute: #f2f2f2;
-
-  --vt-c-black: #181818;
-  --vt-c-black-soft: #222222;
-  --vt-c-black-mute: #282828;
-
-  --vt-c-indigo: #2c3e50;
-
-  --vt-c-divider-light-1: rgba(60, 60, 60, 0.29);
-  --vt-c-divider-light-2: rgba(60, 60, 60, 0.12);
-  --vt-c-divider-dark-1: rgba(84, 84, 84, 0.65);
-  --vt-c-divider-dark-2: rgba(84, 84, 84, 0.48);
-
-  --vt-c-text-light-1: var(--vt-c-indigo);
-  --vt-c-text-light-2: rgba(60, 60, 60, 0.66);
-  --vt-c-text-dark-1: var(--vt-c-white);
-  --vt-c-text-dark-2: rgba(235, 235, 235, 0.64);
-}
-
-/* semantic color variables for this project */
-:root {
-  --color-background: var(--vt-c-white);
-  --color-background-soft: var(--vt-c-white-soft);
-  --color-background-mute: var(--vt-c-white-mute);
-
-  --color-border: var(--vt-c-divider-light-2);
-  --color-border-hover: var(--vt-c-divider-light-1);
-
-  --color-heading: var(--vt-c-text-light-1);
-  --color-text: var(--vt-c-text-light-1);
-
-  --section-gap: 160px;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --color-background: var(--vt-c-black);
-    --color-background-soft: var(--vt-c-black-soft);
-    --color-background-mute: var(--vt-c-black-mute);
-
-    --color-border: var(--vt-c-divider-dark-2);
-    --color-border-hover: var(--vt-c-divider-dark-1);
-
-    --color-heading: var(--vt-c-text-dark-1);
-    --color-text: var(--vt-c-text-dark-2);
-  }
-}
-
-*,
-*::before,
-*::after {
-  box-sizing: border-box;
-  margin: 0;
-  font-weight: normal;
-}
-
-body {
-  min-height: 100vh;
-  color: var(--color-text);
-  background: var(--color-background);
-  transition:
-      color 0.5s,
-      background-color 0.5s;
-  line-height: 1.6;
-  font-family:
-      Inter,
-      -apple-system,
-      BlinkMacSystemFont,
-      'Segoe UI',
-      Roboto,
-      Oxygen,
-      Ubuntu,
-      Cantarell,
-      'Fira Sans',
-      'Droid Sans',
-      'Helvetica Neue',
-      sans-serif;
-  font-size: 15px;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
-
-#app {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-
-  font-weight: normal;
-}
-
-a,
-.green {
-  text-decoration: none;
-  color: hsla(160, 100%, 37%, 1);
-  transition: 0.4s;
-}
-
-@media (hover: hover) {
-  a:hover {
-    background-color: hsla(160, 100%, 37%, 0.2);
-  }
-}
-
-@media (min-width: 1024px) {
-  body {
-    display: flex;
-    place-items: center;
-  }
-
-  #app {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    padding: 0 2rem;
-  }
-}
-
-</style>
-
 <style scoped>
-header {
-  line-height: 1.5;
-
-}
+  header {
+    line-height: 1.5;
+  }
   .controls {
     display: flex;
     flex-direction: column;

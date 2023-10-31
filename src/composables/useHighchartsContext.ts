@@ -1,6 +1,11 @@
-import { reactive, provide, inject, computed } from 'vue';
+import {reactive, provide, inject, type InjectionKey} from 'vue';
 
-const HighchartsContextSymbol = Symbol('HighchartsContext');
+
+type ProvidedChartType = {
+    chartInstance: Highcharts.Chart
+    updateChartOptions: (value: Highcharts.Options) => void
+}
+const HighchartsContextSymbol = Symbol('HighchartsContext') as InjectionKey<ProvidedChartType>;
 
 export function useHighchartsContext() {
     // Check if this is called within a component that has provided this context
